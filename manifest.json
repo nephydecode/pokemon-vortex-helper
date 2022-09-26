@@ -1,0 +1,28 @@
+{
+    "name" : "Pokémon Vortex Battle Helper",
+    "version" : "0.0.1",
+    "description" : "Tool to help Pokémon Vortex players",
+    "permissions":["<all_urls>"],
+    "icons": {
+        "16" : "images/poke16.png",
+        "48" : "images/poke48.png",
+        "128" : "images/poke128.png"
+    },
+    "browser_action": {
+        "default_title":"Pokémon Vortex Battle Helper",
+        "default_popup" : "popout.html",
+        "default_icon": {
+            "16" : "images/poke16.png",
+            "48" : "images/poke48.png",
+            "128" : "images/poke128.png"
+        }
+    },
+    "content_scripts": [{
+        "matches": [
+            "*://pokemon-vortex.com/*", 
+            "*://www.pokemon-vortex.com/*"],
+        "js":["contentScript.js"],
+        "run_at": "document_end"
+        }],
+    "manifest_version" : 2
+}
