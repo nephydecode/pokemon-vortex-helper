@@ -1,3 +1,8 @@
+
+setInterval(()=> {
+    autoNext();
+}, 500)
+
 const pages = {
     Start: "Start",
     Select : "Select",
