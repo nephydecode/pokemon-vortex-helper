@@ -1,7 +1,7 @@
 
-setInterval(()=> {
+const intervalChecker = setInterval(()=> {
     autoNext();
-}, 500)
+}, (Math.random()+0.1)*1000+150)
 
 const pages = {
     Start: "Start",
