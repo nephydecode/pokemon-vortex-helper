@@ -65,6 +65,13 @@ async function checkPage() {
         return pages.Next;
     }
 
-    console.log('none');
+// Simple Equation Solver with only + and - operations
+function addbits(s) {
+    var total = 0,
+        s = s.match(/[+\-]*(\.\d+|\d+(\.\d+)?)/g) || [];
 
+    while (s.length) {
+      total += parseFloat(s.shift());
+    }
+    return total;
 }
