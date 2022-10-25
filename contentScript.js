@@ -35,7 +35,7 @@ function autoNext () {
                 document.getElementsByClassName("menu-tab")[0].click()
                 break
             case "Error" :
-                window.location.href = 'https://pokemon-vortex.com/side-quest'
+                window.location.href = 'https://www.pokemon-vortex.com/sidequests/'
                 break
             case "Sidequest" :
                 document.getElementsByClassName('button-maroon button-large margin-bottom-15 margin-top-10')[0].click()
