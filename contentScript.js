@@ -10,7 +10,11 @@ document.addEventListener('keydown', (event) => {
     var name = event.key;
     var code = event.code;
     
-    if(code==="ShiftLeft") { 
+    if(code==="ShiftLeft") autoNext();
+
+  }, false);
+  
+function autoNext () {
         checkPage().then((e)=> {
             console.log(e);
             switch(e){
