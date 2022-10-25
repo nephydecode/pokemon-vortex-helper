@@ -1,4 +1,5 @@
 const pages = {
+    Start: "Start",
     Select : "Select",
     Battle : "Battle",
     Next : "Next"
@@ -18,6 +19,10 @@ function autoNext () {
         checkPage().then((e)=> {
             console.log(e);
             switch(e){
+            case "Start":
+                const answer = addbits(document.querySelectorAll("label")[6].innerText.slice(27,-3).replaceAll(' ',''))
+                document.getElementById('nojs-solve-v').value = answer
+                document.getElementsByTagName("form")[0].submit()
                 case "Select" :
                     document.getElementsByTagName("form")[0].submit()
                     break
@@ -33,15 +38,13 @@ function autoNext () {
         });
     }
 
-  }, false);
-  
-
 async function checkPage() {
 
     // SELECT POKEMON PAGE
     const header = document.getElementsByClassName("heading-maroon width-95");
     if (header!==undefined) {     
         for ( let i = 0; i< header.length; i++){
+            if (document.querySelectorAll("label")[6] !== undefined && document.querySelectorAll("label")[6].style[0] === 'font-size') return pages.Start;
             if ( header[i].innerHTML === "Select your next Pokémon to battle") return pages.Select;
         }
     }
