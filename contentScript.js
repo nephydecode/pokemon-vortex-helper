@@ -2,7 +2,9 @@ const pages = {
     Start: "Start",
     Select : "Select",
     Battle : "Battle",
-    Next : "Next"
+    Next : "Next",
+    Error : "Error",
+    Sidequest : "Sidequest"
 }
 
 let currentPage;
@@ -32,6 +34,12 @@ function autoNext () {
                 case "Next":
                     document.getElementsByClassName("menu-tab")[0].click()
                     break
+            case "Error" :
+                window.location.href = 'https://pokemon-vortex.com/side-quest'
+                break
+            case "Sidequest" :
+                document.getElementsByClassName('button-maroon button-large margin-bottom-15 margin-top-10')[0].click()
+                break
                 default:
                     break
             }
@@ -53,6 +61,17 @@ async function checkPage() {
     if (document.getElementsByClassName("heading-maroon no-bot-border-rad margin-bottom-3")[0]!== undefined && document.getElementsByClassName("heading-maroon no-bot-border-rad margin-bottom-3")[0].innerHTML === "Congratulations! You won the battle!") { 
         currentPage = "Next";
         return pages.Next;
+    }
+
+    if(document.querySelector('h3.heading-maroon')!==null 
+        && document.querySelector('h3.heading-maroon')!==undefined
+        && document.querySelector('h3.heading-maroon').innerText!==null 
+        && document.querySelector('h3.heading-maroon').innerText == 'An error has occurred, please refresh the page or return to the battle select page you came from.'){
+        return pages.Error;
+    }
+
+    if(document.getElementsByClassName('button-maroon button-large margin-bottom-15 margin-top-10')[0]!==null && document.getElementsByClassName('button-maroon button-large margin-bottom-15 margin-top-10')[0]!==undefined){
+        return pages.Sidequest;
     }
 
     // BATTLE PAGE
