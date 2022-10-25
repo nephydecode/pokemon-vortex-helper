@@ -44,7 +44,7 @@ async function checkPage() {
 
     // BATTLE PAGE
     const battle = document.getElementsByClassName("heading-maroon no-right-border-rad margin-right-2");
-    if (battle !== undefined && battle[0].innerHTML == "Select an Attack" || battle !== undefined && battle[0].innerHTML === "Attack Results") {
+    if (battle[0] !== undefined && battle[0].innerHTML == "Select an Attack" || battle !== undefined && battle[0].innerHTML === "Attack Results") {
         currentPage = "Battle";
         return pages.Battle;
     }
