@@ -62,10 +62,6 @@ async function checkPage() {
         return pages.Battle;
     }
 
-    // COMPLETE BATTLE PAGE
-    if (document.getElementsByClassName("heading-maroon no-bot-border-rad margin-bottom-3")[0].innerHTML === "Congratulations! You won the battle!") { 
-        currentPage = "Next";
-        return pages.Next;
     }
 
 // Simple Equation Solver with only + and - operations
