@@ -1,4 +1,7 @@
 
+// VARIABLE - Stop at this number
+const SIDEQUESTNO = 1645;
+
 const intervalChecker = setInterval(()=> {
     autoNext();
 }, (Math.random()+0.1)*1000+150)
@@ -22,6 +25,11 @@ function autoNext () {
         console.log(e);
         switch(e){
             case "Start":
+                if(window.location.href.slice(48,-1) >= SIDEQUESTNO){
+                    clearInterval(intervalChecker)
+                    console.log(`Reached target Sidequest #${SIDEQUESTNO}. AutoBattler script has been stopped.`)
+                    break
+                }
                 const answer = addbits(document.querySelectorAll("label")[6].innerText.slice(27,-3).replaceAll(' ',''))
                 document.getElementById('nojs-solve-v').value = answer
                 document.getElementsByTagName("form")[0].submit()
