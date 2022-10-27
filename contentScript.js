@@ -16,6 +16,7 @@ const pages = {
     Next : "Next",
     Error : "Error",
     Sidequest : "Sidequest",
+    Battletower : "Battletower",
     Team : "Team"
 }
 
