@@ -1,0 +1,19 @@
+{
+    "Flail" : {"type" : "NORMAL", "damage" : 130},
+    "Focus Punch" : {"type" : "FIGHTING", "damage" : 100},
+    "Fling" : {"type" : "DARK", "damage" : 130},
+    "Solar Beam" : {"type" : "GRASS", "damage" : 120},
+    "Gyro Ball" : {"type" : "STEEL", "damage" : 150},
+    "Draco Meteor" : {"type" : "DRAGON", "damage" : 130},
+    "Stomping Tantrum" : {"type" : "GROUND", "damage" : 75},
+    "Shadow Ball" : {"type" : "GHOST", "damage" : 80},
+    "Dream Eater" : {"type" : "PSYCHIC", "damage" : 100},
+    "Dazzling Gleam" : {"type" : "FAIRY", "damage" : 80},
+    "Eruption" : {"type" : "FIRE", "damage" : 150},
+    "Earthquake" : {"type" : "GROUND", "damage" : 100},
+    "Stone Edge" : {"type" : "ROCK", "damage" : 100},
+    "Rock Wrecker" : {"type" : "ROCK", "damage" : 110},
+    "Ice Beam" : {"type" : "ICE", "damage" : 90},
+    "V-Create" : {"type" : "FIRE", "damage" : 180},
+    "Freeze Shock" : {"type" : "ICE", "damage" : 140}
+}
