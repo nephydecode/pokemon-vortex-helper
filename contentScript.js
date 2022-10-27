@@ -41,6 +41,24 @@ async function bestMove(attacker, defender, movelist) {
 async function fetchDex(dexType) {
     return await fetch(chrome.runtime.getURL(`db/${dexType}dex.json`)).then((response) => { return response.json()})
 }
+
+function pokemonParser(pokemon){
+    let parsedName = pokemon;
+    if(pokemon.startsWith('Shiny')) parsedName = parsedName.replace('Shiny ', '')
+    if(pokemon.startsWith('Dark')) parsedName = parsedName.replace('Dark ', '')
+    if(pokemon.startsWith('Mystic')) parsedName = parsedName.replace('Mystic ', '')
+    if(pokemon.startsWith('Metallic')) parsedName = parsedName.replace('Metallic ', '')
+    if(pokemon.startsWith('Shadow')) parsedName = parsedName.replace('Shadow ', '')
+    if(pokemon.includes('(')) { 
+        let SubName = pokemon.slice(pokemon.indexOf('('));
+        if(validParanthesis[SubName.slice(1,-1)]===undefined) {
+            parsedName = parsedName.replace(SubName, '')
+            parsedName = parsedName.slice(0,-1)
+        }
+    }
+    return parsedName
+}
+
 // VARIABLE - Stop at this number
 const SIDEQUESTNO = 9999;
 const STOPATLEGENDARY = false;
