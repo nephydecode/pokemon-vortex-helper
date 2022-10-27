@@ -85,6 +85,10 @@ async function checkPage() {
         return pages.Next;
     }
 
+    if (document.getElementsByClassName('alert-red')[0]!==undefined && document.getElementsByClassName('alert-red')[0].innerText === "You have already completed a battle within the last 10 seconds. This is in effect to stop players having an advantage over others.") {
+        return pages.Next;
+    }
+
     if(document.querySelector('h3.heading-maroon')!==null 
         && document.querySelector('h3.heading-maroon')!==undefined
         && document.querySelector('h3.heading-maroon').innerText!==null 
