@@ -1,4 +1,38 @@
 
+// bestMove('Lopunny (Mega)', 'Whiscash', ['Flail', 'Focus Punch', 'Fling', 'Solar Beam'])
+
+async function bestMove(attacker, defender, movelist) {
+    typedex = await(fetchDex('type'))
+    attackdex = await(fetchDex('attack'))
+    pokedex = await(fetchDex('poke'))
+    // console.log(pokedex[attacker])
+    // console.log(attackdex)
+    // console.log(typedex['WATER'])
+
+    attackerTypes = pokedex[attacker].length
+    defenderTypes = pokedex[defender].length
+    console.log(`attacker has ${attackerTypes} type(s)`)
+    console.log(`defender has ${defenderTypes} type(s)`)
+
+    let maxDmg = 0;
+    let maxDmgMove;
+
+    for (let move=0; move<movelist.length; move++){
+        let dmg = attackdex[movelist[move]].damage;
+        if(pokedex[attacker].includes(attackdex[movelist[move]].type)) dmg *= 1.5   // STAB
+        dmg *= typedex[pokedex[defender][0]][attackdex[movelist[move]].type]        // EFFECTIVENESS TYPE 1
+        if(defenderTypes===2) dmg *= typedex[pokedex[defender][1]][attackdex[movelist[move]].type] // EFFECTIVENESS TYPE 2
+
+        if(dmg>maxDmg){
+            maxDmg = dmg
+            maxDmgMove = movelist[move]
+        }
+        console.log(`${movelist[move]} dmg - ${dmg}`)
+    }
+    console.log(`${maxDmgMove} has the highest damage of ${maxDmg}`)
+    return maxDmgMove;
+}
+
 // VARIABLE - Stop at this number
 const SIDEQUESTNO = 9999;
 const STOPATLEGENDARY = false;
