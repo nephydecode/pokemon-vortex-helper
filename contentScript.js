@@ -1,10 +1,11 @@
 
 // VARIABLE - Stop at this number
-const SIDEQUESTNO = 1645;
+const SIDEQUESTNO = 9999;
+const STOPATLEGENDARY = false;
+const FASTESTRUN = false;
 
-const intervalChecker = setInterval(()=> {
-    autoNext();
-}, (Math.random()+0.1)*1000+150)
+const TIMER = FASTESTRUN ? 100 : (Math.random()+0.1)*1000+150;
+const intervalChecker = setInterval(()=> autoNext(), TIMER);
 
 const pages = {
     Start: "Start",
@@ -29,6 +30,16 @@ function autoNext () {
                     clearInterval(intervalChecker)
                     console.log(`Reached target Sidequest #${SIDEQUESTNO}. AutoBattler script has been stopped.`)
                     break
+                }
+                if(STOPATLEGENDARY){
+                    const firstEnemyPokemon = document.getElementsByClassName('trainerOpponent')[6].nextElementSibling.innerHTML;
+                    const indexOfLevel = document.getElementsByClassName('trainerOpponent')[6].nextElementSibling.innerHTML.indexOf('</em>') + 6
+                    const firstEnemyPokemonLevel = firstEnemyPokemon.slice(indexOfLevel,indexOfLevel+3)
+                    console.log(`LEVEL OF FIRST POKEMON : ${firstEnemyPokemonLevel}`)
+                    if(firstEnemyPokemonLevel>100){
+                        clearInterval(intervalChecker)
+                        break
+                    }
                 }
                 const answer = addbits(document.querySelectorAll("label")[6].innerText.slice(27,-3).replaceAll(' ',''))
                 document.getElementById('nojs-solve-v').value = answer
