@@ -107,7 +107,7 @@ async function checkPage() {
 
     const h2header = document.querySelector('h2.heading-maroon.no-bot-border-rad.margin-bottom-3')
     if(h2header!== undefined && h2header!== null) {
-        if(h2header.innerText==='Sorry, you lost the battle.') return pages.Next
+        if(h2header.textContent === 'Sorry, you lost the battle.') return pages.Next
         if(h2header.textContent === 'Season Battle Tower') return pages.Battletower;
     }
 
