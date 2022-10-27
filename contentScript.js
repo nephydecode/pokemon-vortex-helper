@@ -85,9 +85,9 @@ document.addEventListener('keydown', (event) => {
     if(code==="ShiftLeft") autoNext();
   }, false);
   
-function autoNext () {
-    checkPage().then((e)=> {
-        console.log(e);
+async function autoNext () {
+    checkPage().then(async (e)=> {
+        // console.log(e);
         switch(e){
             case "Start":
                 if(window.location.href.slice(48,-1) >= SIDEQUESTNO){
