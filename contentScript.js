@@ -110,6 +110,12 @@ async function checkPage() {
         if(h2header.innerText==='Sorry, you lost the battle.') return pages.Next
         if(h2header.textContent === 'Season Battle Tower') return pages.Battletower;
     }
+
+    const alert = document.getElementsByClassName('alert-red')
+    if (alert!== undefined && alert!==null){
+        if(alert[0].innerHTML.slice(44) === 'An error has occurred. Please try again later.') return pages.Error
+    }
+
 }
 
 // Simple Equation Solver with only + and - operations
