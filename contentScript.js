@@ -112,7 +112,7 @@ async function checkPage() {
     }
 
     const alert = document.getElementsByClassName('alert-red')
-    if (alert!== undefined && alert!==null){
+    if (alert[0]!== undefined && alert[0]!==null){
         if(alert[0].innerHTML.slice(44) === 'An error has occurred. Please try again later.') return pages.Error
     }
 
