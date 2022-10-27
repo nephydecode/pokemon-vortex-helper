@@ -19,10 +19,15 @@
     },
     "content_scripts": [{
         "matches": [
-            "*://pokemon-vortex.com/*", 
-            "*://www.pokemon-vortex.com/*"],
+            "https://www.pokemon-vortex.com/battle-tower/*",
+            "https://www.pokemon-vortex.com/sidequests/*",
+            "https://www.pokemon-vortex.com/battle/*",
+            "https://www.pokemon-vortex.com/season-battle-tower/*",
+            "https://www.pokemon-vortex.com/team/*"
+        ],
         "js":["contentScript.js"],
         "run_at": "document_end"
         }],
+    "web_accessible_resources": [ "db/typedex.json", "db/attackdex.json", "db/pokedex.json" ],
     "manifest_version" : 2
 }
