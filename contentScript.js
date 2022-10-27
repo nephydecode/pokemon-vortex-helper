@@ -3,6 +3,7 @@
 const SIDEQUESTNO = 9999;
 const STOPATLEGENDARY = false;
 const FASTESTRUN = false;
+const BATTLETOWER = true;
 
 const TIMER = FASTESTRUN ? 100 : (Math.random()+0.1)*1000+150;
 const intervalChecker = setInterval(()=> autoNext(), TIMER);
@@ -13,7 +14,8 @@ const pages = {
     Battle : "Battle",
     Next : "Next",
     Error : "Error",
-    Sidequest : "Sidequest"
+    Sidequest : "Sidequest",
+    Battletower : "Battletower"
 }
 
 document.addEventListener('keydown', (event) => {
@@ -54,11 +56,13 @@ function autoNext () {
                 document.getElementsByClassName("menu-tab")[0].click()
                 break
             case "Error" :
-                window.location.href = 'https://www.pokemon-vortex.com/sidequests/'
+                window.location.href = BATTLETOWER ? "https://www.pokemon-vortex.com/season-battle-tower/" : "https://www.pokemon-vortex.com/sidequests/"
                 break
             case "Sidequest" :
                 document.getElementsByClassName('button-maroon button-large margin-bottom-15 margin-top-10')[0].click()
                 break
+            case "Battletower" :
+                document.getElementsByClassName('button-maroon button-small width-25 margin-bottom-10')[0].click()
             default:
                 break
         }
@@ -98,6 +102,11 @@ async function checkPage() {
         return pages.Battle;
     }
 
+    const h2header = document.querySelector('h2.heading-maroon.no-bot-border-rad.margin-bottom-3')
+    if(h2header!== undefined && h2header!== null) {
+        if(h2header.innerText==='Sorry, you lost the battle.') return pages.Next
+        if(h2header.textContent === 'Season Battle Tower') return pages.Battletower;
+    }
 }
 
 // Simple Equation Solver with only + and - operations
