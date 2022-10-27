@@ -96,9 +96,8 @@ async function checkPage() {
         return pages.Sidequest;
     }
 
-    // BATTLE PAGE
     const battle = document.getElementsByClassName("heading-maroon no-right-border-rad margin-right-2");
-    if (battle[0] !== undefined && battle[0].innerHTML == "Select an Attack" || battle !== undefined && battle[0].innerHTML === "Attack Results") {
+    if (battle[0] !== undefined && battle[0].innerHTML == "Select an Attack" || battle[0] !== undefined && battle[0].innerHTML === "Attack Results") {
         return pages.Battle;
     }
 
