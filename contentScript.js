@@ -15,7 +15,7 @@ const pages = {
     Next : "Next",
     Error : "Error",
     Sidequest : "Sidequest",
-    Battletower : "Battletower"
+    Team : "Team"
 }
 
 document.addEventListener('keydown', (event) => {
@@ -63,6 +63,9 @@ function autoNext () {
                 break
             case "Battletower" :
                 document.getElementsByClassName('button-maroon button-small width-25 margin-bottom-10')[0].click()
+            case "Team" :
+                // do nothing
+                break;
             default:
                 break
         }
@@ -109,6 +112,7 @@ async function checkPage() {
     if(h2header!== undefined && h2header!== null) {
         if(h2header.textContent === 'Sorry, you lost the battle.') return pages.Next
         if(h2header.textContent === 'Season Battle Tower') return pages.Battletower;
+        if(h2header.textContent === 'Manage Your Pokémon Team') return;
     }
 
     const alert = document.getElementsByClassName('alert-red')
