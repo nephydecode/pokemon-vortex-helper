@@ -112,6 +112,28 @@ async function autoNext () {
                 document.getElementsByTagName("form")[0].submit()
                 break
             case "Battle" :
+                const header = document.querySelector('h3.heading-maroon.no-right-border-rad.margin-right-2');
+                if(header!==undefined && header!==null && header.innerText === 'Select an Attack'){
+                    try{
+                        let enemyPokemon = document.querySelectorAll('h4')[0].innerText.slice(0,document.querySelectorAll('h4')[0].innerText.indexOf(' - '))
+                        if(enemyPokemon.slice(-1)===' ') enemyPokemon = enemyPokemon.slice(0,-1)
+                        const defender = pokemonParser(enemyPokemon)
+                        let myPokemon = document.querySelectorAll('h4')[1].innerText.slice(0,document.querySelectorAll('h4')[1].innerText.indexOf(' - '))
+                        if(myPokemon.slice(-1)===' ') myPokemon = myPokemon.slice(0,-1)
+                        const attacker = pokemonParser(myPokemon)
+                        const movelist = []
+                        for(let i=0;i<4;i++) movelist.push(document.getElementsByClassName('height-100 pad-top-5')[i].innerText)
+                        const _bestMove = await bestMove(attacker, defender, movelist)
+                        console.log(_bestMove)
+                        const bestMoveIndex = movelist.indexOf(_bestMove)
+                        console.log(bestMoveIndex)
+                        document.getElementsByClassName('height-100 pad-top-5')[bestMoveIndex].click()
+                    } catch (e){
+                        console.log(e)
+                        document.getElementsByTagName("form")[1].submit()
+                        break
+                    }
+                }
                 document.getElementsByTagName("form")[1].submit()
                 break
             case "Next":
