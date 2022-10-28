@@ -163,16 +163,21 @@ async function autoNext () {
                     let enemyPokemon = document.querySelectorAll('h4')[0].innerText.slice(0,document.querySelectorAll('h4')[0].innerText.indexOf(' - '))
                     if(enemyPokemon.slice(-1)===' ') enemyPokemon = enemyPokemon.slice(0,-1)
                     const defender = pokemonParser(enemyPokemon)
-                    let myPokemon = document.querySelectorAll('h4')[1].innerText.slice(0,document.querySelectorAll('h4')[1].innerText.indexOf(' - '))
-                    if(myPokemon.slice(-1)===' ') myPokemon = myPokemon.slice(0,-1)
-                    const attacker = pokemonParser(myPokemon)
-                    const movelist = []
-                    for(let i=0;i<4;i++) movelist.push(document.getElementsByClassName('height-100 pad-top-5')[i].innerText)
-                    const _bestMove = await bestMove(attacker, defender, movelist)
-                    console.log(_bestMove)
+                    pokedex = await(fetchDex('poke'))
+                    if(pokedex[defender]!==undefined){
+                        let myPokemon = document.querySelectorAll('h4')[1].innerText.slice(0,document.querySelectorAll('h4')[1].innerText.indexOf(' - '))
+                        if(myPokemon.slice(-1)===' ') myPokemon = myPokemon.slice(0,-1)
+                        const attacker = pokemonParser(myPokemon)
+                        const movelist = []
+                        for(let i=0;i<4;i++) movelist.push(document.getElementsByClassName('height-100 pad-top-5')[i].innerText)
+                        const _bestMove = await bestMove(attacker, defender, movelist)
+                        console.log(_bestMove)
+                        const bestMoveIndex = movelist.indexOf(_bestMove.move)   
                     const bestMoveIndex = movelist.indexOf(_bestMove.move)   
-                    console.log(bestMoveIndex)
-                    document.getElementsByClassName('height-100 pad-top-5')[bestMoveIndex].click()
+                        const bestMoveIndex = movelist.indexOf(_bestMove.move)   
+                        console.log(bestMoveIndex)
+                        document.getElementsByClassName('height-100 pad-top-5')[bestMoveIndex].click()
+                    }
                     document.getElementsByTagName("form")[1].submit()
                     break
                 }
