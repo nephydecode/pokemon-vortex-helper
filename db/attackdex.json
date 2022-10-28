@@ -15,5 +15,6 @@
     "Rock Wrecker" : {"type" : "ROCK", "damage" : 110},
     "Ice Beam" : {"type" : "ICE", "damage" : 90},
     "V-Create" : {"type" : "FIRE", "damage" : 180},
-    "Freeze Shock" : {"type" : "ICE", "damage" : 140}
+    "Freeze Shock" : {"type" : "ICE", "damage" : 140},
+    "Reversal" : {"type" : "FIGHTING", "damage" : 120}
 }
