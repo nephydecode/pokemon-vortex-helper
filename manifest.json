@@ -28,6 +28,6 @@
         "js":["contentScript.js"],
         "run_at": "document_end"
         }],
-    "web_accessible_resources": [ "db/typedex.json", "db/attackdex.json", "db/pokedex.json" ],
+    "web_accessible_resources": [ "db/typedex.json", "db/attackdex.json", "db/pokedex.json", "db/teamdex.json" ],
     "manifest_version" : 2
 }
