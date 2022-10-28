@@ -147,6 +147,14 @@ async function autoNext () {
                 document.getElementById('nojs-solve-v').value = answer
                 document.getElementsByTagName("form")[0].submit()
             case "Select" :
+                const availPoke = await availPokemonMatchup();
+                const defender = pokemonParser(availPoke.opponentPokemon)
+                pokedex = await(fetchDex('poke'))
+                if(pokedex[defender]!==undefined) {
+                    const bestPoke = await bestPokemon(availPoke.myPokemonList, availPoke.opponentPokemon)
+                    const pokeSelect = document.getElementsByClassName('height-100 pad-top-30')
+                    for (let i=0; i<6; i++) if(pokeSelect[i].children[2].children[0].children[0].innerText === bestPoke) pokeSelect[i].click()
+                }
                 document.getElementsByTagName("form")[0].submit()
                 break
             case "Battle" :
