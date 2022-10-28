@@ -34,7 +34,8 @@ async function bestMove(attacker, defender, movelist) {
         console.log(`${movelist[move]} dmg - ${dmg}`)
     }
     console.log(`${maxDmgMove} has the highest damage of ${maxDmg}`)
-    return maxDmgMove;
+    console.log({move: maxDmgMove, dmg: maxDmg})
+    return {move: maxDmgMove, dmg: maxDmg};
 }
 
 // ATTACK, POKE, TYPE
