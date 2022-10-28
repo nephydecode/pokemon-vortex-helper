@@ -43,6 +43,25 @@ async function fetchDex(dexType) {
     return await fetch(chrome.runtime.getURL(`db/${dexType}dex.json`)).then((response) => { return response.json()})
 }
 
+
+function availPokemonMatchup(){
+    const availPokemon = []
+    let availEnemyPoke = ""
+    for(let i = 0; i<6; i++){
+        const currentPoke = document.querySelectorAll('strong')[i].children[0];
+        if(currentPoke.children[0]==undefined) availPokemon.push(currentPoke.innerText)
+    }
+    for(let i = 6; i<12; i++){
+        const enemyPoke = document.querySelectorAll('strong')[i].children[0];
+        if(enemyPoke.children[0]===undefined) {
+            availEnemyPoke = enemyPoke.innerText
+            break
+        }
+    }
+    console.log()
+    return {myPokemonList: availPokemon, opponentPokemon: availEnemyPoke}
+}
+
 function pokemonParser(pokemon){
     let parsedName = pokemon;
     if(pokemon.startsWith('Shiny')) parsedName = parsedName.replace('Shiny ', '')
