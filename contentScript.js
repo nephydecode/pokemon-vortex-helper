@@ -43,6 +43,24 @@ async function fetchDex(dexType) {
     return await fetch(chrome.runtime.getURL(`db/${dexType}dex.json`)).then((response) => { return response.json()})
 }
 
+async function bestPokemon(myPokemonList, opponentPokemon){
+    // await console.log(myPokemonList)
+    // await console.log(opponentPokemon)
+
+    let teamdex = await(fetchDex('team'))
+    let maxDmg = 0;
+    let maxDmgPoke = ""
+    for (let poke = 0; poke < myPokemonList.length; poke++){
+        console.log(teamdex[pokemonParser(myPokemonList[poke])]);
+        bestMoveObj = await bestMove(pokemonParser(myPokemonList[poke]), pokemonParser(opponentPokemon), teamdex[pokemonParser(myPokemonList[poke])])
+        if(bestMoveObj.dmg > maxDmg){
+            maxDmg = bestMoveObj.dmg
+            maxDmgPoke = myPokemonList[poke]
+        }
+    }
+
+    return maxDmgPoke;
+}
 
 function availPokemonMatchup(){
     const availPokemon = []
