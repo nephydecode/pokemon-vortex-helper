@@ -1,5 +1,5 @@
 
-// bestMove('Lopunny (Mega)', 'Whiscash', ['Flail', 'Focus Punch', 'Fling', 'Solar Beam'])
+const pages = { Start: "Start", Select : "Select", Battle : "Battle", Next : "Next", Error : "Error", Sidequest : "Sidequest", Battletower : "Battletower", Team : "Team", SidequestCompletion : "SidequestCompletion", SidequestPrize : "SidequestPrize" }
 
 const validParanthesis = {'Amped' : 'Amped', 'Low Key' : 'Low Key', 'Ice' : 'Ice', 'Noice' : 'Noice', 'Hangry' : 'Hangry', 'Crowned' : 'Crowned', 'Eternamax' : 'Eternamax', 'Single Strike' : 'Single Strike', 'Rapid Strike' : 'Rapid Strike', 'Cell' : 'Cell', 'Complete' : 'Complete', 'Core' : 'Core', 'Partial' : 'Partial', 'Unbound' : 'Unbound', 'Baile' : 'Baile', 'Pau' : 'Pau', 'PomPom' : 'PomPom', 'Sensu' : 'Sensu', 'Midday' : 'Midday', 'Midnight' : 'Midnight', 'Dusk' : 'Dusk', 'School' : 'School', 'Meteor' : 'Meteor', 'Dusk Mane' : 'Dusk Mane', 'Dawn Wings' : 'Dawn Wings', 'Ultra' : 'Ultra', 'Average' : 'Average', 'Small' : 'Small', 'Large' : 'Large', 'Super' : 'Super', 'F' : 'F', 'M' : 'M', 'Shield' : 'Shield', 'Blade' : 'Blade', 'Mega' : 'Mega', 'Mega X' : 'Mega X', 'Mega Y' : 'Mega Y', 'Primal' : 'Primal', 'Origin' : 'Origin', 'Resolute' : 'Resolute', 'Aria' : 'Aria', 'Pirouette' : 'Pirouette', 'Sky' : 'Sky', 'Therian' : 'Therian', 'Black' : 'Black', 'White' : 'White', 'Attack' : 'Attack', 'Defense' : 'Defense', 'Speed' : 'Speed', 'Plant' : 'Plant', 'Sandy' : 'Sandy', 'Steel' : 'Steel', 'Alolan' : 'Alolan', 'Galarian' : 'Galarian', 'Hisuian' : 'Hisuian', 'Zen' : 'Zen', 'Galarian Zen' : 'Galarian Zen', 'Red Striped' : 'Red Striped', 'Blue Striped' : 'Blue Striped', 'White Striped' : 'White Striped', 'Heat' : 'Heat', 'Wash' : 'Wash', 'Phone' : 'Phone', 'Pokedex' : 'Pokedex', 'Frost' : 'Frost', 'Spin' : 'Spin', 'Cut' : 'Cut' }
 
@@ -192,6 +192,13 @@ async function autoNext () {
             case "Sidequest" :
                 document.getElementsByClassName('button-maroon button-large margin-bottom-15 margin-top-10')[0].click()
                 break
+            case "SidequestCompletion":
+                document.getElementsByClassName('button-black button-large margin-top-10 margin-bottom-15')[0].click()
+                break
+            case "SidequestPrize":
+                const prizes = document.querySelector('div.alert-green').nextElementSibling.innerText.replaceAll('\n', ', ')
+                console.log(prizes)
+                break
             case "Battletower" :
                 document.getElementsByClassName('button-maroon button-small width-25 margin-bottom-10')[0].click()
             case "Team" :
@@ -230,8 +237,16 @@ async function checkPage() {
         return pages.Error;
     }
 
+    if(document.querySelector('div.alert-green')!==null){
+        return pages.SidequestPrize
+    }
+
     if(document.getElementsByClassName('button-maroon button-large margin-bottom-15 margin-top-10')[0]!==null && document.getElementsByClassName('button-maroon button-large margin-bottom-15 margin-top-10')[0]!==undefined){
-        return pages.Sidequest;
+        return pages.Sidequest
+    }
+
+    if(document.getElementsByClassName('button-black button-large margin-top-10 margin-bottom-15')[0]!==null && document.getElementsByClassName('button-black button-large margin-top-10 margin-bottom-15')[0]!==undefined){
+        return pages.SidequestCompletion
     }
 
     const battle = document.getElementsByClassName("heading-maroon no-right-border-rad margin-right-2");
