@@ -1,3 +1,12 @@
+// VARIABLE - Stop at this number
+const SIDEQUESTNO = 9999;
+const STOPATLEGENDARY = false;
+const FASTESTRUN = false;
+const BATTLETOWER = true;
+const AUTOBATTLE = true;
+
+const TIMER = FASTESTRUN ? 100 : (Math.random()+0.1)*1000+350;
+const intervalChecker = AUTOBATTLE ? setInterval(()=> autoNext(), TIMER) : false;
 
 const pages = { Start: "Start", Select : "Select", Battle : "Battle", Next : "Next", Error : "Error", Sidequest : "Sidequest", Battletower : "Battletower", Team : "Team", SidequestCompletion : "SidequestCompletion", SidequestPrize : "SidequestPrize" }
 
