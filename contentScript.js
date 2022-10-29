@@ -275,6 +275,8 @@ async function checkPage() {
         if(alert[0].innerHTML.slice(44) === 'An error has occurred. Please try again later.') return pages.Error
     }
 
+    if(console.log(document.body.children.length === 2)) return pages.Error
+
 }
 
 // Simple Equation Solver with only + and - operations
