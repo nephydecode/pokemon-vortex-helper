@@ -23,7 +23,9 @@
             "https://www.pokemon-vortex.com/sidequests/*",
             "https://www.pokemon-vortex.com/battle/*",
             "https://www.pokemon-vortex.com/season-battle-tower/*",
-            "https://www.pokemon-vortex.com/team/*"
+            "https://www.pokemon-vortex.com/team/*",
+            "https://www.pokemon-vortex.com/battle-sidequest/*",
+            "https://www.pokemon-vortex.com/battle-league/*"
         ],
         "js":["contentScript.js"],
         "run_at": "document_end"
