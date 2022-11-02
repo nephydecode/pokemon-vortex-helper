@@ -47,6 +47,18 @@ async function fetchDex(dexType) {
     return await fetch(chrome.runtime.getURL(`db/${dexType}dex.json`)).then((response) => { return response.json()})
 }
 
+const readLocalStorage = async (key) => {
+    return new Promise((resolve, reject) => {
+      chrome.storage.local.get([key], function (result) {
+        if (result[key] === undefined) {
+          reject();
+        } else {
+          resolve(result[key]);
+        }
+      });
+    });
+  };
+
 async function bestPokemon(myPokemonList, opponentPokemon){
     // await console.log(myPokemonList)
     // await console.log(opponentPokemon)
