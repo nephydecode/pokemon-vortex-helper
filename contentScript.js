@@ -232,7 +232,8 @@ async function autoNext () {
                 break
             case "SidequestPrize":
                 const prizes = document.querySelector('div.alert-green').nextElementSibling.innerText.replaceAll('\n', ', ')
-                console.log(prizes)
+                prizes[0] = "$" + prizes[0]
+                alert(prizes)
                 break
             case "Battletower" :
                 document.getElementsByClassName('button-maroon button-small width-25 margin-bottom-10')[0].click()
