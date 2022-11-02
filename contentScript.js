@@ -164,15 +164,7 @@ async function autoNext () {
                     
                 break;
             case "Select" :
-                const availPoke = await availPokemonMatchup();
-                const defender = pokemonParser(availPoke.opponentPokemon)
-                pokedex = await(fetchDex('poke'))
-                if(pokedex[defender]!==undefined) {
-                    const bestPoke = await bestPokemon(availPoke.myPokemonList, availPoke.opponentPokemon)
-                    const pokeSelect = document.getElementsByClassName('height-100 pad-top-30')
-                    for (let i=0; i<6; i++) if(pokeSelect[i].children[2].children[0].children[0].innerText === bestPoke) pokeSelect[i].click()
-                }
-                document.getElementsByTagName("form")[0].submit()
+                await SelectBestPokeAndContinue(); 
                 break
             case "Battle" :
                 await chrome.storage.local.get('currentSideQuestNo', async function(result) {
@@ -254,6 +246,28 @@ async function autoNext () {
     });
 }
 
+async function SelectBestPokeAndContinue() {
+    chrome.storage.local.get('teamdex', async (e) => { console.log(e.teamdex); });
+    const availPoke = await availPokemonMatchup();
+    const defender = pokemonParser(availPoke.opponentPokemon);
+    pokedex = await (fetchDex('poke'));
+    Promise.all([availPokemonMatchup(), fetchDex('poke'), bestPokemon(availPoke.myPokemonList, availPoke.opponentPokemon)]).then((values) => {
+        console.log(values);
+    });
+    if (pokedex[defender] !== undefined) {
+        // const bestPoke = await bestPokemon(availPoke.myPokemonList, availPoke.opponentPokemon).then(response => console.log(response))
+        const bestPoke = await bestPokemon(availPoke.myPokemonList, availPoke.opponentPokemon).then(async (e) => {
+            const parsedPoke = pokemonParser(e);
+            console.log(parsedPoke);
+            const pokeSelect = document.getElementsByClassName('height-100 pad-top-30');
+            for (let i = 0; i < 6; i++) {
+                if (pokemonParser(pokeSelect[i].children[2].children[0].children[0].innerText) === parsedPoke)
+                    pokeSelect[i].click();
+                if (SUBMIT)
+                    document.getElementsByTagName("form")[0].submit();
+            }
+        });
+    }
     if (SUBMIT)
         setTimeout(() => { document.getElementsByTagName("form")[0].submit(); }, 6000);
 }
