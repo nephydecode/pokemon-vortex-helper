@@ -1,16 +1,17 @@
 // VARIABLE - Stop at this number
 const SIDEQUESTNO = 9999;
+const USETIMER = true;
+const TIME_TO_STOP = new Date('Wed Nov 2 2022 20:21:05 GMT+0800');
 const STOPATLEGENDARY = false;
-const FASTESTRUN = false;
 const BATTLETOWER = true;
 let AUTOBATTLE = true;
 const SUBMIT = true;
 const TRAINFIRSTPOKE = false;
+const TIMER = (Math.random()+0.1)*1000+350;
 
-const TIMER = FASTESTRUN ? 100 : (Math.random()+0.1)*1000+350;
-const intervalChecker = AUTOBATTLE ? setInterval(()=> autoNext(), TIMER) : false;
+if (USETIMER) chrome.storage.local.set({'time' : TIME_TO_STOP})
 
-const pages = { Start: "Start", Select : "Select", Battle : "Battle", Next : "Next", Error : "Error", Sidequest : "Sidequest", Battletower : "Battletower", Team : "Team", SidequestCompletion : "SidequestCompletion", SidequestPrize : "SidequestPrize" }
+let intervalChecker;
 
 if(isNumeric(window.location.href.slice(48,-1)) && (window.location.href.slice(48,-1) >= SIDEQUESTNO)) {
     console.log(`Reached target Sidequest #${SIDEQUESTNO}. AutoBattler script has been stopped.`)
@@ -20,6 +21,39 @@ else if (AUTOBATTLE){
     console.log('interval run')
     intervalChecker = setInterval(()=> autoNext(), TIMER)
 }
+
+const TIME_NOW = new Date()
+const TIME_DIFF = TIME_TO_STOP - TIME_NOW
+console.log(TIME_DIFF/60000)
+
+if(USETIMER && TIME_DIFF<0) {
+    clearInterval(intervalChecker)
+    console.log('TIMES UP')
+}
+
+/* TIMER START HERE
+
+// const TIME_DIFF = TIME_TO_STOP - TIME_NOW
+console.log(TIME_DIFF/60000)
+
+if (USETIMER) {
+    chrome.storage.local.set({'stop_time' : TIME_TO_STOP})
+    chrome.storage.local.get('stop_time', async function(result) {
+        const TIME_NOW = new Date()
+        const stop_time = result.time
+        const TIME_DIFF = stop_time - TIME_NOW
+        if(TIME_DIFF<0){
+            clearInterval(intervalChecker)
+            console.log('TIMES UP')
+        }
+    })
+}
+// if(USETIMER && TIME_DIFF<0) {
+//     clearInterval(intervalChecker)
+//     console.log('TIMES UP')
+// }
+
+END HERE */
 
 const pages = { Start: "Start", Select : "Select", Battle : "Battle", BattleAttackResults : "BattleAttackResults", Next : "Next", Error : "Error", Sidequest : "Sidequest", Battletower : "Battletower", Team : "Team", SidequestCompletion : "SidequestCompletion", SidequestPrize : "SidequestPrize" }
 
