@@ -5,13 +5,21 @@ const FASTESTRUN = false;
 const BATTLETOWER = true;
 let AUTOBATTLE = true;
 const SUBMIT = true;
+const TRAINFIRSTPOKE = false;
 
 const TIMER = FASTESTRUN ? 100 : (Math.random()+0.1)*1000+350;
 const intervalChecker = AUTOBATTLE ? setInterval(()=> autoNext(), TIMER) : false;
 
 const pages = { Start: "Start", Select : "Select", Battle : "Battle", Next : "Next", Error : "Error", Sidequest : "Sidequest", Battletower : "Battletower", Team : "Team", SidequestCompletion : "SidequestCompletion", SidequestPrize : "SidequestPrize" }
 
-const validParanthesis = {'Amped' : 'Amped', 'Low Key' : 'Low Key', 'Ice' : 'Ice', 'Noice' : 'Noice', 'Hangry' : 'Hangry', 'Crowned' : 'Crowned', 'Eternamax' : 'Eternamax', 'Single Strike' : 'Single Strike', 'Rapid Strike' : 'Rapid Strike', 'Cell' : 'Cell', 'Complete' : 'Complete', 'Core' : 'Core', 'Partial' : 'Partial', 'Unbound' : 'Unbound', 'Baile' : 'Baile', 'Pau' : 'Pau', 'PomPom' : 'PomPom', 'Sensu' : 'Sensu', 'Midday' : 'Midday', 'Midnight' : 'Midnight', 'Dusk' : 'Dusk', 'School' : 'School', 'Meteor' : 'Meteor', 'Dusk Mane' : 'Dusk Mane', 'Dawn Wings' : 'Dawn Wings', 'Ultra' : 'Ultra', 'Average' : 'Average', 'Small' : 'Small', 'Large' : 'Large', 'Super' : 'Super', 'F' : 'F', 'M' : 'M', 'Shield' : 'Shield', 'Blade' : 'Blade', 'Mega' : 'Mega', 'Mega X' : 'Mega X', 'Mega Y' : 'Mega Y', 'Primal' : 'Primal', 'Origin' : 'Origin', 'Resolute' : 'Resolute', 'Aria' : 'Aria', 'Pirouette' : 'Pirouette', 'Sky' : 'Sky', 'Therian' : 'Therian', 'Black' : 'Black', 'White' : 'White', 'Attack' : 'Attack', 'Defense' : 'Defense', 'Speed' : 'Speed', 'Plant' : 'Plant', 'Sandy' : 'Sandy', 'Steel' : 'Steel', 'Alolan' : 'Alolan', 'Galarian' : 'Galarian', 'Hisuian' : 'Hisuian', 'Zen Mode' : 'Zen Mode', 'Galarian Zen' : 'Galarian Zen', 'Red Striped' : 'Red Striped', 'Blue Striped' : 'Blue Striped', 'White Striped' : 'White Striped', 'Heat' : 'Heat', 'Wash' : 'Wash', 'Phone' : 'Phone', 'Pokedex' : 'Pokedex', 'Frost' : 'Frost', 'Spin' : 'Spin', 'Cut' : 'Cut' }
+if(isNumeric(window.location.href.slice(48,-1)) && (window.location.href.slice(48,-1) >= SIDEQUESTNO)) {
+    console.log(`Reached target Sidequest #${SIDEQUESTNO}. AutoBattler script has been stopped.`)
+    intervalchecker = false
+}
+else if (AUTOBATTLE){
+    console.log('interval run')
+    intervalChecker = setInterval(()=> autoNext(), TIMER)
+}
 
 // console.log(pokemonParser('Dark Lopunny (Mega)'))
 
@@ -146,7 +154,15 @@ async function autoNext () {
                 }
                 const answer = addbits(document.querySelectorAll("label")[6].innerText.slice(27,-3).replaceAll(' ',''))
                 document.getElementById('nojs-solve-v').value = answer
-                document.getElementsByTagName("form")[0].submit()
+                if(AUTOBATTLE && currentSideQuestNo <= SIDEQUESTNO && TRAINFIRSTPOKE) {
+                    document.getElementsByTagName("form")[0].submit()
+                }
+                else if (AUTOBATTLE && currentSideQuestNo <= SIDEQUESTNO) {
+                    await SelectBestPokeAndContinue(); 
+                    // document.getElementsByTagName("form")[0].submit()
+                }
+                    
+                break;
             case "Select" :
                 const availPoke = await availPokemonMatchup();
                 const defender = pokemonParser(availPoke.opponentPokemon)
@@ -200,14 +216,8 @@ async function autoNext () {
                   });
                   setTimeout(()=>{document.getElementsByTagName("form")[1].submit()}, 4000) 
                 break
-                        const bestMoveIndex = movelist.indexOf(_bestMove.move)   
-                        console.log(bestMoveIndex)
-                        document.getElementsByClassName('height-100 pad-top-5')[bestMoveIndex].click()
-                    }
-                    document.getElementsByTagName("form")[1].submit()
-                    break
-                }
-                document.getElementsByTagName("form")[1].submit()
+            case "BattleAttackResults" :
+                if (SUBMIT) document.getElementsByTagName("form")[1].submit()
                 break
             case "Next":
                 document.getElementsByClassName("menu-tab")[0].click()
@@ -242,6 +252,10 @@ async function autoNext () {
                 break
         }
     });
+}
+
+    if (SUBMIT)
+        setTimeout(() => { document.getElementsByTagName("form")[0].submit(); }, 6000);
 }
 
 async function checkPage() {
@@ -284,15 +298,16 @@ async function checkPage() {
     }
 
     const battle = document.getElementsByClassName("heading-maroon no-right-border-rad margin-right-2");
-    if (battle[0] !== undefined && battle[0].innerHTML == "Select an Attack" || battle[0] !== undefined && battle[0].innerHTML === "Attack Results") {
-        return pages.Battle;
+    if (battle[0] !== undefined) {
+        if(battle[0].innerHTML === "Attack Results") return pages.Battle
+        if(battle[0].innerHTML === "Select an Attack") return pages.Battle;
     }
 
     const h2header = document.querySelector('h2.heading-maroon.no-bot-border-rad.margin-bottom-3')
     if(h2header!== undefined && h2header!== null) {
         if(h2header.textContent === 'Sorry, you lost the battle.') return pages.Next
         if(h2header.textContent === 'Season Battle Tower') return pages.Battletower;
-        if(h2header.textContent === 'Manage Your Pokémon Team') return;
+        if(h2header.textContent === 'Manage Your Pokémon Team') return pages.Team;
     }
 
     const alert = document.getElementsByClassName('alert-red')
