@@ -3,7 +3,8 @@ const SIDEQUESTNO = 9999;
 const STOPATLEGENDARY = false;
 const FASTESTRUN = false;
 const BATTLETOWER = true;
-const AUTOBATTLE = true;
+let AUTOBATTLE = true;
+const SUBMIT = true;
 
 const TIMER = FASTESTRUN ? 100 : (Math.random()+0.1)*1000+350;
 const intervalChecker = AUTOBATTLE ? setInterval(()=> autoNext(), TIMER) : false;
@@ -129,6 +130,7 @@ const pages = {
 
 document.addEventListener('keydown', (event) => {
     var code = event.code;
+    AUTOBATTLE = true;
     if(code==="ShiftLeft") autoNext();
   }, false);
   
