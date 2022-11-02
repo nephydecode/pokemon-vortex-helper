@@ -2,7 +2,7 @@
     "name" : "Pokémon Vortex Battle Helper",
     "version" : "0.0.1",
     "description" : "Tool to help Pokémon Vortex players",
-    "permissions":["<all_urls>"],
+    "permissions":["<all_urls>", "storage"],
     "icons": {
         "16" : "images/poke16.png",
         "48" : "images/poke48.png",
