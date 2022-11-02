@@ -177,21 +177,20 @@ async function autoNext () {
             case "Battle" :
                 await chrome.storage.local.get('currentSideQuestNo', async function(result) {
                     const _currentSideQuestNo = result.currentSideQuestNo
-                const header = document.querySelector('h3.heading-maroon.no-right-border-rad.margin-right-2');
-                if(header!==undefined && header!==null && header.innerText === 'Select an Attack'){
-                    let enemyPokemon = document.querySelectorAll('h4')[0].innerText.slice(0,document.querySelectorAll('h4')[0].innerText.indexOf(' - '))
-                    if(enemyPokemon.slice(-1)===' ') enemyPokemon = enemyPokemon.slice(0,-1)
-                    const defender = pokemonParser(enemyPokemon)
-                    pokedex = await(fetchDex('poke'))
-                    if(pokedex[defender]!==undefined){
-                        let myPokemon = document.querySelectorAll('h4')[1].innerText.slice(0,document.querySelectorAll('h4')[1].innerText.indexOf(' - '))
-                        if(myPokemon.slice(-1)===' ') myPokemon = myPokemon.slice(0,-1)
-                        const attacker = pokemonParser(myPokemon)
-                        const movelist = []
-                        for(let i=0;i<4;i++) movelist.push(document.getElementsByClassName('height-100 pad-top-5')[i].innerText)
-                        const _bestMove = await bestMove(attacker, defender, movelist)
-                        console.log(_bestMove)
-                        const bestMoveIndex = movelist.indexOf(_bestMove.move)   
+                    var content = document.getElementById('content')
+                    var iDiv = document.createElement('h2');
+                    iDiv.id = 'block';
+                    iDiv.className = 'block';
+                    iDiv.textContent = `current sidequest is ${_currentSideQuestNo}, stopping : ${SIDEQUESTNO}`
+                    iDiv.style.backgroundColor = "maroon"
+                    iDiv.style.color = "white"
+                    iDiv.style.borderRadius = "25px"
+                    iDiv.style.padding = 5
+                    if(document.getElementById('block')===null) content.insertBefore(iDiv, content.firstChild);
+                    const header = document.querySelector('h3.heading-maroon.no-right-border-rad.margin-right-2');
+                    if(header!==undefined && header!==null && header.innerText === 'Attack Results'){
+                        if(SUBMIT) document.getElementsByTagName("form")[1].submit()  
+                    }
                     if(header!==undefined && header!==null && header.innerText === 'Select an Attack'){
                         let enemyPokemon = document.querySelectorAll('h4')[0].innerText.slice(0,document.querySelectorAll('h4')[0].innerText.indexOf(' - '))
                         if(enemyPokemon.slice(-1)===' ') enemyPokemon = enemyPokemon.slice(0,-1)
