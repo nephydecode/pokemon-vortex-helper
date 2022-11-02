@@ -39,12 +39,12 @@ async function bestMove(attacker, defender, movelist) {
     }
     console.log(`${maxDmgMove} has the highest damage of ${maxDmg}`)
     console.log({move: maxDmgMove, dmg: maxDmg})
-    return {move: maxDmgMove, dmg: maxDmg};
+    return new Promise(function(resolve){resolve({move: maxDmgMove, dmg: maxDmg})});
 }
 
 // ATTACK, POKE, TYPE
 async function fetchDex(dexType) {
-    return await fetch(chrome.runtime.getURL(`db/${dexType}dex.json`)).then((response) => { return response.json()})
+    return await fetch(chrome.runtime.getURL(`db/${dexType}dex.json`)).then((response) => {return response.json()})
 }
 
 const readLocalStorage = async (key) => {
@@ -62,23 +62,24 @@ const readLocalStorage = async (key) => {
 async function bestPokemon(myPokemonList, opponentPokemon){
     // await console.log(myPokemonList)
     // await console.log(opponentPokemon)
-
-    let teamdex = await(fetchDex('team'))
+    let teamdex;
+    var maxDmgPoke = ""
     let maxDmg = 0;
-    let maxDmgPoke = ""
+    teamdex = {"Camerupt": ["Lava Plume","Earth Power","Rock Slide","Take Down"],"Lopunny": ["Flail","Jump Kick","Bounce","Dizzy Punch"],"Magneton": ["Tri Attack","Electro Ball","Mirror Shot","Gyro Ball"],"Rhyperior": ["Stone Edge","Earthquake","Megahorn","Hammer Arm"],"Sableye": ["Scratch","Night Shade","Fury Swipes","Feint Attack"],"Turtonator": ["Shell Trap","Tackle","Smog","Incinerate"]
+    }
+    teamdex = await readLocalStorage('teamdex')
+    // console.log(x)
     for (let poke = 0; poke < myPokemonList.length; poke++){
-        console.log(teamdex[pokemonParser(myPokemonList[poke])]);
         bestMoveObj = await bestMove(pokemonParser(myPokemonList[poke]), pokemonParser(opponentPokemon), teamdex[pokemonParser(myPokemonList[poke])])
         if(bestMoveObj.dmg > maxDmg){
             maxDmg = bestMoveObj.dmg
             maxDmgPoke = myPokemonList[poke]
         }
     }
-
-    return maxDmgPoke;
+    return new Promise(function(resolve){resolve(maxDmgPoke)});
 }
 
-function availPokemonMatchup(){
+async function availPokemonMatchup(){
     const availPokemon = []
     let availEnemyPoke = ""
     for(let i = 0; i<6; i++){
@@ -92,8 +93,7 @@ function availPokemonMatchup(){
             break
         }
     }
-    console.log()
-    return {myPokemonList: availPokemon, opponentPokemon: availEnemyPoke}
+    return new Promise(function(resolve){resolve({myPokemonList: availPokemon, opponentPokemon: availEnemyPoke})});
 }
 
 function pokemonParser(pokemon){
@@ -145,11 +145,8 @@ async function autoNext () {
         // console.log(e);
         switch(e){
             case "Start":
-                if(window.location.href.slice(48,-1) >= SIDEQUESTNO){
-                    clearInterval(intervalChecker)
-                    console.log(`Reached target Sidequest #${SIDEQUESTNO}. AutoBattler script has been stopped.`)
-                    break
-                }
+                const currentSideQuestNo = window.location.href.slice(48,-1)
+                await chrome.storage.local.set({'currentSideQuestNo' : currentSideQuestNo})
                 if(STOPATLEGENDARY){
                     const firstEnemyPokemon = document.getElementsByClassName('trainerOpponent')[6].nextElementSibling.innerHTML;
                     const indexOfLevel = document.getElementsByClassName('trainerOpponent')[6].nextElementSibling.innerHTML.indexOf('</em>') + 6
@@ -175,6 +172,8 @@ async function autoNext () {
                 document.getElementsByTagName("form")[0].submit()
                 break
             case "Battle" :
+                await chrome.storage.local.get('currentSideQuestNo', async function(result) {
+                    const _currentSideQuestNo = result.currentSideQuestNo
                 const header = document.querySelector('h3.heading-maroon.no-right-border-rad.margin-right-2');
                 if(header!==undefined && header!==null && header.innerText === 'Select an Attack'){
                     let enemyPokemon = document.querySelectorAll('h4')[0].innerText.slice(0,document.querySelectorAll('h4')[0].innerText.indexOf(' - '))
@@ -190,7 +189,30 @@ async function autoNext () {
                         const _bestMove = await bestMove(attacker, defender, movelist)
                         console.log(_bestMove)
                         const bestMoveIndex = movelist.indexOf(_bestMove.move)   
-                    const bestMoveIndex = movelist.indexOf(_bestMove.move)   
+                    if(header!==undefined && header!==null && header.innerText === 'Select an Attack'){
+                        let enemyPokemon = document.querySelectorAll('h4')[0].innerText.slice(0,document.querySelectorAll('h4')[0].innerText.indexOf(' - '))
+                        if(enemyPokemon.slice(-1)===' ') enemyPokemon = enemyPokemon.slice(0,-1)
+                        const defender = pokemonParser(enemyPokemon)
+                        pokedex = await(fetchDex('poke'))
+                        if(pokedex[defender]!==undefined){
+                            let myPokemon = document.querySelectorAll('h4')[1].innerText.slice(0,document.querySelectorAll('h4')[1].innerText.indexOf(' - '))
+                            if(myPokemon.slice(-1)===' ') myPokemon = myPokemon.slice(0,-1)
+                            const attacker = pokemonParser(myPokemon)
+                            const movelist = []
+                            for(let i=0;i<4;i++) movelist.push(document.getElementsByClassName('height-100 pad-top-5')[i].innerText)
+                            const _bestMove = await bestMove(attacker, defender, movelist)
+                            console.log(_bestMove)
+                            const bestMoveIndex = movelist.indexOf(_bestMove.move)   
+                        const bestMoveIndex = movelist.indexOf(_bestMove.move)   
+                            const bestMoveIndex = movelist.indexOf(_bestMove.move)   
+                            console.log(bestMoveIndex)
+                            document.getElementsByClassName('height-100 pad-top-5')[bestMoveIndex].click()
+                            if(SUBMIT) document.getElementsByTagName("form")[1].submit()
+                        }
+                    }
+                  });
+                  setTimeout(()=>{document.getElementsByTagName("form")[1].submit()}, 4000) 
+                break
                         const bestMoveIndex = movelist.indexOf(_bestMove.move)   
                         console.log(bestMoveIndex)
                         document.getElementsByClassName('height-100 pad-top-5')[bestMoveIndex].click()
@@ -219,6 +241,14 @@ async function autoNext () {
             case "Battletower" :
                 document.getElementsByClassName('button-maroon button-small width-25 margin-bottom-10')[0].click()
             case "Team" :
+                const teamList = [];
+                const teamdex = {};
+
+                for(let i =0; i<document.querySelectorAll('h4.color-maroon').length; i+=2){teamList.push(pokemonParser(document.querySelectorAll('h4.color-maroon')[i].children[0].innerText))}
+                for(let i = 0; i < teamList.length; i++ ){
+                    teamdex[teamList[i]] = document.getElementsByClassName('back')[i].children[0].children[3].innerHTML.replace('\n<b class="color-maroon" style="backface-visibility: hidden;">\n<i class="ion-flash" style="backface-visibility: hidden;"></i> Attacks <i class="ion-flash" style="backface-visibility: hidden;"></i>\n</b><br style="backface-visibility: hidden;">\n','').replaceAll('<br style="backface-visibility: hidden;">\n', ', ').replace('\n', '').split(', ')
+                }
+                chrome.storage.local.set({'teamdex': teamdex});
                 // do nothing
                 break;
             default:
