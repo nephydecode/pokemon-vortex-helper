@@ -73,8 +73,7 @@ async function bestPokemon(myPokemonList, opponentPokemon){
     let teamdex;
     var maxDmgPoke = ""
     let maxDmg = 0;
-    teamdex = {"Camerupt": ["Lava Plume","Earth Power","Rock Slide","Take Down"],"Lopunny": ["Flail","Jump Kick","Bounce","Dizzy Punch"],"Magneton": ["Tri Attack","Electro Ball","Mirror Shot","Gyro Ball"],"Rhyperior": ["Stone Edge","Earthquake","Megahorn","Hammer Arm"],"Sableye": ["Scratch","Night Shade","Fury Swipes","Feint Attack"],"Turtonator": ["Shell Trap","Tackle","Smog","Incinerate"]
-    }
+
     teamdex = await readLocalStorage('teamdex')
     // console.log(x)
     for (let poke = 0; poke < myPokemonList.length; poke++){
@@ -113,8 +112,6 @@ function pokemonParser(pokemon){
         if(pokemon.startsWith('Mystic')) parsedName = parsedName.replace('Mystic ', '')
         if(pokemon.startsWith('Metallic')) parsedName = parsedName.replace('Metallic ', '')
         if(pokemon.startsWith('Shadow')) parsedName = parsedName.replace('Shadow ', '')
-        if(pokemon.includes('(')) { 
-    if(pokemon.includes('(')) { 
         if(pokemon.includes('(')) { 
             let SubName = pokemon.slice(pokemon.indexOf('('));
             if(validParanthesis[SubName.slice(1,-1)]===undefined) {
@@ -196,8 +193,6 @@ async function autoNext () {
                             for(let i=0;i<4;i++) movelist.push(document.getElementsByClassName('height-100 pad-top-5')[i].innerText)
                             const _bestMove = await bestMove(attacker, defender, movelist)
                             console.log(_bestMove)
-                            const bestMoveIndex = movelist.indexOf(_bestMove.move)   
-                        const bestMoveIndex = movelist.indexOf(_bestMove.move)   
                             const bestMoveIndex = movelist.indexOf(_bestMove.move)   
                             console.log(bestMoveIndex)
                             document.getElementsByClassName('height-100 pad-top-5')[bestMoveIndex].click()
