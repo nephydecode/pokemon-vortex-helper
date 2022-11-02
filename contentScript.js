@@ -21,7 +21,7 @@ else if (AUTOBATTLE){
     intervalChecker = setInterval(()=> autoNext(), TIMER)
 }
 
-// console.log(pokemonParser('Dark Lopunny (Mega)'))
+const pages = { Start: "Start", Select : "Select", Battle : "Battle", BattleAttackResults : "BattleAttackResults", Next : "Next", Error : "Error", Sidequest : "Sidequest", Battletower : "Battletower", Team : "Team", SidequestCompletion : "SidequestCompletion", SidequestPrize : "SidequestPrize" }
 
 async function bestMove(attacker, defender, movelist) {
     typedex = await(fetchDex('type'))
