@@ -19,15 +19,9 @@ async function bestMove(attacker, defender, movelist) {
     typedex = await(fetchDex('type'))
     attackdex = await(fetchDex('attack'))
     pokedex = await(fetchDex('poke'))
-    // console.log(pokedex[attacker])
-    // console.log(attackdex)
-    // console.log(typedex['WATER'])
 
     attackerTypes = pokedex[attacker].length
     defenderTypes = pokedex[defender].length
-    console.log(`attacker has ${attackerTypes} type(s)`)
-    console.log(`defender has ${defenderTypes} type(s)`)
-
     let maxDmg = 0;
     let maxDmgMove;
 
