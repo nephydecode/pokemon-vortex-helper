@@ -97,41 +97,28 @@ async function availPokemonMatchup(){
 }
 
 function pokemonParser(pokemon){
+    const validParanthesis = {'Amped' : 'Amped', 'Low Key' : 'Low Key', 'Ice' : 'Ice', 'Noice' : 'Noice', 'Hangry' : 'Hangry', 'Crowned' : 'Crowned', 'Eternamax' : 'Eternamax', 'Single Strike' : 'Single Strike', 'Rapid Strike' : 'Rapid Strike', 'Cell' : 'Cell', 'Complete' : 'Complete', 'Core' : 'Core', 'Partial' : 'Partial', 'Unbound' : 'Unbound', 'Baile' : 'Baile', 'Pau' : 'Pau', 'PomPom' : 'PomPom', 'Sensu' : 'Sensu', 'Midday' : 'Midday', 'Midnight' : 'Midnight', 'Dusk' : 'Dusk', 'School' : 'School', 'Meteor' : 'Meteor', 'Dusk Mane' : 'Dusk Mane', 'Dawn Wings' : 'Dawn Wings', 'Ultra' : 'Ultra', 'Average' : 'Average', 'Small' : 'Small', 'Large' : 'Large', 'Super' : 'Super', 'F' : 'F', 'M' : 'M', 'Shield' : 'Shield', 'Blade' : 'Blade', 'Mega' : 'Mega', 'Mega X' : 'Mega X', 'Mega Y' : 'Mega Y', 'Primal' : 'Primal', 'Origin' : 'Origin', 'Resolute' : 'Resolute', 'Aria' : 'Aria', 'Pirouette' : 'Pirouette', 'Sky' : 'Sky', 'Therian' : 'Therian', 'Black' : 'Black', 'White' : 'White', 'Attack' : 'Attack', 'Defense' : 'Defense', 'Speed' : 'Speed', 'Plant' : 'Plant', 'Sandy' : 'Sandy', 'Steel' : 'Steel', 'Alolan' : 'Alolan', 'Galarian' : 'Galarian', 'Hisuian' : 'Hisuian', 'Zen Mode' : 'Zen Mode', 'Galarian Zen' : 'Galarian Zen', 'Red Striped' : 'Red Striped', 'Blue Striped' : 'Blue Striped', 'White Striped' : 'White Striped', 'Heat' : 'Heat', 'Wash' : 'Wash', 'Phone' : 'Phone', 'Pokedex' : 'Pokedex', 'Frost' : 'Frost', 'Spin' : 'Spin', 'Cut' : 'Cut' }
     let parsedName = pokemon;
-    if(pokemon.startsWith('Shiny')) parsedName = parsedName.replace('Shiny ', '')
-    if(pokemon.startsWith('Dark')) parsedName = parsedName.replace('Dark ', '')
-    if(pokemon.startsWith('Mystic')) parsedName = parsedName.replace('Mystic ', '')
-    if(pokemon.startsWith('Metallic')) parsedName = parsedName.replace('Metallic ', '')
-    if(pokemon.startsWith('Shadow')) parsedName = parsedName.replace('Shadow ', '')
+    try{
+        if(pokemon.startsWith('Shiny')) parsedName = parsedName.replace('Shiny ', '')
+        if(pokemon.startsWith('Dark')) parsedName = parsedName.replace('Dark ', '')
+        if(pokemon.startsWith('Mystic')) parsedName = parsedName.replace('Mystic ', '')
+        if(pokemon.startsWith('Metallic')) parsedName = parsedName.replace('Metallic ', '')
+        if(pokemon.startsWith('Shadow')) parsedName = parsedName.replace('Shadow ', '')
+        if(pokemon.includes('(')) { 
     if(pokemon.includes('(')) { 
-        let SubName = pokemon.slice(pokemon.indexOf('('));
-        if(validParanthesis[SubName.slice(1,-1)]===undefined) {
-            parsedName = parsedName.replace(SubName, '')
-            parsedName = parsedName.slice(0,-1)
+        if(pokemon.includes('(')) { 
+            let SubName = pokemon.slice(pokemon.indexOf('('));
+            if(validParanthesis[SubName.slice(1,-1)]===undefined) {
+                parsedName = parsedName.replace(SubName, '')
+                parsedName = parsedName.slice(0,-1)
+            }
         }
+        return parsedName
     }
-    return parsedName
-}
-
-// VARIABLE - Stop at this number
-const SIDEQUESTNO = 9999;
-const STOPATLEGENDARY = false;
-const FASTESTRUN = false;
-const BATTLETOWER = true;
-const AUTOBATTLE = true;
-
-const TIMER = FASTESTRUN ? 100 : (Math.random()+0.1)*1000+150;
-const intervalChecker = AUTOBATTLE ? setInterval(()=> autoNext(), TIMER) : false;
-
-const pages = {
-    Start: "Start",
-    Select : "Select",
-    Battle : "Battle",
-    Next : "Next",
-    Error : "Error",
-    Sidequest : "Sidequest",
-    Battletower : "Battletower",
-    Team : "Team"
+    catch(e){
+        return(e)
+    }
 }
 
 document.addEventListener('keydown', (event) => {
